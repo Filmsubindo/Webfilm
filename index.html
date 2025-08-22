@@ -39,7 +39,17 @@
     .servers button:hover, .episodes button:hover, .nav-buttons button:hover {
       background: #555;
     }
-    .episodes { margin: 10px auto; max-width: 600px; flex-wrap: wrap; display: flex; justify-content: center; }
+    .episodes {
+      margin: 10px auto;
+      max-width: 800px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* 4 kolom */
+      gap: 8px;
+    }
+    .episodes button {
+      width: 100%;
+      padding: 10px;
+    }
     .episodes button.active { background: #e50914; font-weight: bold; }
     .nav-buttons { margin: 15px 0; }
     .synopsis { max-width: 800px; margin: 0px auto; text-align: justify; padding: 10px; }
@@ -57,8 +67,6 @@
     </a>
   </div>
 
-
-
   <!-- Player -->
   <iframe id="player" src="" allowfullscreen></iframe>
 
@@ -66,14 +74,13 @@
   <h3 class="server-label">Pilih Server</h3>
   <div class="servers" id="servers"></div>
 
-
   <!-- Navigation Episode -->
   <div class="nav-buttons">
     <button onclick="prevEpisode()">Sebelumnya</button>
     <button onclick="nextEpisode()">Selanjutnya</button>
   </div>
 
-     <!-- Banner Ads -->
+  <!-- Banner Ads -->
   <div class="banner">
     <a href="**BANNER_ADS_LINK**" target="_blank">
       <img src="**BANNER_IMAGE**" alt="Iklan" onerror="this.outerHTML='<p style=\'color:#aaa;\'>[ADS HERE]</p>'">
@@ -84,15 +91,15 @@
   <h3>Episode</h3>
   <div id="episodes" class="episodes"></div>
   
-   <!-- Banner Ads -->
+  <!-- Banner Ads -->
   <div class="banner">
     <a href="**BANNER_ADS_LINK**" target="_blank">
       <img src="**BANNER_IMAGE**" alt="Iklan" onerror="this.outerHTML='<p style=\'color:#aaa;\'>[ADS HERE]</p>'">
     </a>
   </div>
   
-    <!-- Poster & Sinopsis -->
-  <img id="poster" class="poster" src="**POSTER_IMAGE**c" alt="Poster">
+  <!-- Poster & Sinopsis -->
+  <img id="poster" class="poster" src="**POSTER_IMAGE**" alt="Poster">
   <div id="synopsis" class="synopsis">**SINOPSIS**</div>
 
   <script>
