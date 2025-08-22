@@ -1,95 +1,40 @@
 {
-  "DRAMA_TITLE": "Judul Drama Korea",
-  "BANNER_ADS_TOP": "URL_BANNER_ADS_ATAS",
-  "BANNER_ADS_MIDDLE": "URL_BANNER_ADS_TENGAH",
-  "BANNER_ADS_BOTTOM": "URL_BANNER_ADS_BAWAH",
-  "VIDEO_SERVERS": {
-    "Doodstream": "URL_VIDEO_DOODSTREAM",
-    "Mixdrop": "URL_VIDEO_MIXDROP",
-    "Streamtape": "URL_VIDEO_STREAMTAPE"
-  },
-  "EPISODES": [
-    {
-      "episode": 1,
-      "link": "URL_EPISODE_1"
+  "title": "**JUDUL DRAMA**",
+  "poster": "**POSTER_IMAGE**",
+  "synopsis": "**SINOPSIS_DRAMA**",
+  "servers": ["doodstream", "mixdrop", "streamtape"],
+  "episodes": {
+    "1": {
+      "doodstream": "**DOOD_EP1**",
+      "mixdrop": "**MIXDROP_EP1**",
+      "streamtape": "**STREAMTAPE_EP1**"
     },
-    {
-      "episode": 2,
-      "link": "URL_EPISODE_2"
+    "2": {
+      "doodstream": "**DOOD_EP2**",
+      "mixdrop": "**MIXDROP_EP2**",
+      "streamtape": "**STREAMTAPE_EP2**"
     },
-    {
-      "episode": 3,
-      "link": "URL_EPISODE_3"
+    "3": {
+      "doodstream": "**DOOD_EP3**",
+      "mixdrop": "**MIXDROP_EP3**",
+      "streamtape": "**STREAMTAPE_EP3**"
     },
-    {
-      "episode": 4,
-      "link": "URL_EPISODE_4"
-    },
-    {
-      "episode": 5,
-      "link": "URL_EPISODE_5"
-    },
-    {
-      "episode": 6,
-      "link": "URL_EPISODE_6"
-    },
-    {
-      "episode": 7,
-      "link": "URL_EPISODE_7"
-    },
-    {
-      "episode": 8,
-      "link": "URL_EPISODE_8"
-    },
-    {
-      "episode": 9,
-      "link": "URL_EPISODE_9"
-    },
-    {
-      "episode": 10,
-      "link": "URL_EPISODE_10"
-    },
-    {
-      "episode": 11,
-      "link": "URL_EPISODE_11"
-    },
-    {
-      "episode": 12,
-      "link": "URL_EPISODE_12"
-    },
-    {
-      "episode": 13,
-      "link": "URL_EPISODE_13"
-    },
-    {
-      "episode": 14,
-      "link": "URL_EPISODE_14"
-    },
-    {
-      "episode": 15,
-      "link": "URL_EPISODE_15"
-    },
-    {
-      "episode": 16,
-      "link": "URL_EPISODE_16"
-    },
-    {
-      "episode": 17,
-      "link": "URL_EPISODE_17"
-    },
-    {
-      "episode": 18,
-      "link": "URL_EPISODE_18"
-    },
-    {
-      "episode": 19,
-      "link": "URL_EPISODE_19"
-    },
-    {
-      "episode": 20,
-      "link": "URL_EPISODE_20"
-    }
-  ],
-  "POSTER": "URL_POSTER_IMAGE",
-  "SINOPSIS": "Tulis sinopsis drama di sini."
+    "4": { "doodstream": "**DOOD_EP4**", "mixdrop": "**MIXDROP_EP4**", "streamtape": "**STREAMTAPE_EP4**" },
+    "5": { "doodstream": "**DOOD_EP5**", "mixdrop": "**MIXDROP_EP5**", "streamtape": "**STREAMTAPE_EP5**" },
+    "6": { "doodstream": "**DOOD_EP6**", "mixdrop": "**MIXDROP_EP6**", "streamtape": "**STREAMTAPE_EP6**" },
+    "7": { "doodstream": "**DOOD_EP7**", "mixdrop": "**MIXDROP_EP7**", "streamtape": "**STREAMTAPE_EP7**" },
+    "8": { "doodstream": "**DOOD_EP8**", "mixdrop": "**MIXDROP_EP8**", "streamtape": "**STREAMTAPE_EP8**" },
+    "9": { "doodstream": "**DOOD_EP9**", "mixdrop": "**MIXDROP_EP9**", "streamtape": "**STREAMTAPE_EP9**" },
+    "10": { "doodstream": "**DOOD_EP10**", "mixdrop": "**MIXDROP_EP10**", "streamtape": "**STREAMTAPE_EP10**" },
+    "11": { "doodstream": "**DOOD_EP11**", "mixdrop": "**MIXDROP_EP11**", "streamtape": "**STREAMTAPE_EP11**" },
+    "12": { "doodstream": "**DOOD_EP12**", "mixdrop": "**MIXDROP_EP12**", "streamtape": "**STREAMTAPE_EP12**" },
+    "13": { "doodstream": "**DOOD_EP13**", "mixdrop": "**MIXDROP_EP13**", "streamtape": "**STREAMTAPE_EP13**" },
+    "14": { "doodstream": "**DOOD_EP14**", "mixdrop": "**MIXDROP_EP14**", "streamtape": "**STREAMTAPE_EP14**" },
+    "15": { "doodstream": "**DOOD_EP15**", "mixdrop": "**MIXDROP_EP15**", "streamtape": "**STREAMTAPE_EP15**" },
+    "16": { "doodstream": "**DOOD_EP16**", "mixdrop": "**MIXDROP_EP16**", "streamtape": "**STREAMTAPE_EP16**" },
+    "17": { "doodstream": "**DOOD_EP17**", "mixdrop": "**MIXDROP_EP17**", "streamtape": "**STREAMTAPE_EP17**" },
+    "18": { "doodstream": "**DOOD_EP18**", "mixdrop": "**MIXDROP_EP18**", "streamtape": "**STREAMTAPE_EP18**" },
+    "19": { "doodstream": "**DOOD_EP19**", "mixdrop": "**MIXDROP_EP19**", "streamtape": "**STREAMTAPE_EP19**" },
+    "20": { "doodstream": "**DOOD_EP20**", "mixdrop": "**MIXDROP_EP20**", "streamtape": "**STREAMTAPE_EP20**" }
+  }
 }
