@@ -14,9 +14,9 @@
       text-align: center;
     }
     h1 { 
-      padding: 8px;        /* lebih kecil */
-      font-size: 20px;     /* lebih ringkas */
-      margin: 0;           /* hilangkan jarak default */
+      padding: 8px;
+      font-size: 20px;
+      margin: 0;
     }
     .banner {
       background: #222;
@@ -56,7 +56,7 @@
       margin: 10px auto;
       max-width: 800px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr); /* 4 kolom */
+      grid-template-columns: repeat(4, 1fr);
       gap: 8px;
     }
     .episodes button {
@@ -65,6 +65,21 @@
     }
     .episodes button.active { background: #e50914; font-weight: bold; }
     .nav-buttons { margin: 15px 0; }
+
+    /* Responsive Ads */
+    .ad-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px auto;
+      max-width: 100%;
+    }
+    .ad-container iframe {
+      width: 100% !important;
+      height: auto !important;
+      max-width: 300px;
+      border: none;
+    }
   </style>
 </head>
 <body>
@@ -78,19 +93,21 @@
            onerror="this.outerHTML='<p style=\'color:#aaa;\'>[ADS HERE]</p>'">
     </a>
   </div>
-<!-- Contoh penempatan di sidebar -->
-<div style="text-align:center; margin:10px auto;">
-  <script type="text/javascript">
-    atOptions = {
-      'key' : '9305b559af351cb4039ab7087d1c0cad',
-      'format' : 'iframe',
-      'height' : 250,
-      'width' : 300,
-      'params' : {}
-    };
-  </script>
-  <script type="text/javascript" src="//www.highperformanceformat.com/9305b559af351cb4039ab7087d1c0cad/invoke.js"></script>
-</div>
+
+  <!-- Script Iklan Adsterra Responsive -->
+  <div class="ad-container">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '9305b559af351cb4039ab7087d1c0cad',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/9305b559af351cb4039ab7087d1c0cad/invoke.js"></script>
+  </div>
+
   <!-- Player -->
   <div class="player-container">
     <iframe id="player" src="" allowfullscreen></iframe>
@@ -127,7 +144,7 @@
   </div>
 
   <script>
-    const dataUrl = "data.json"; // GANTI JIKA PERLU
+    const dataUrl = "data.json";
     let currentServer = "doodstream";
     let currentEpisode = "1";
     let data;
