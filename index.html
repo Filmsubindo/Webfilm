@@ -21,7 +21,7 @@
     }
     iframe {
       width: 100%;
-      height: 400px;
+      height: 200px;
       max-width: 900px;
       border-radius: 8px;
       margin-top: 10px;
@@ -43,7 +43,7 @@
     .episodes button.active { background: #e50914; font-weight: bold; }
     .nav-buttons { margin: 15px 0; }
     .synopsis { max-width: 800px; margin: 15px auto; text-align: justify; padding: 10px; }
-    img.poster { max-width: 300px; border-radius: 8px; margin: 15px 0; }
+    img.poster { max-width: 30px; border-radius: 8px; margin: 15px 0; }
   </style>
 </head>
 <body>
@@ -57,9 +57,7 @@
     </a>
   </div>
 
-  <!-- Poster & Sinopsis -->
-  <img id="poster" class="poster" src="**POSTER_IMAGE**" alt="Poster">
-  <div id="synopsis" class="synopsis">**SINOPSIS**</div>
+
 
   <!-- Player -->
   <iframe id="player" src="" allowfullscreen></iframe>
@@ -77,6 +75,10 @@
   <!-- Episodes -->
   <h3>Episode</h3>
   <div id="episodes" class="episodes"></div>
+
+    <!-- Poster & Sinopsis -->
+  <img id="poster" class="poster" src="**POSTER_IMAGE**c" alt="Poster">
+  <div id="synopsis" class="synopsis">**SINOPSIS**</div>
 
   <script>
     const dataUrl = "data.json"; // GANTI JIKA PERLU
