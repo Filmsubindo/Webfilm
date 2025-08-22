@@ -66,16 +66,31 @@
   <h3 class="server-label">Pilih Server</h3>
   <div class="servers" id="servers"></div>
 
+
   <!-- Navigation Episode -->
   <div class="nav-buttons">
-    <button onclick="prevEpisode()">⬅ Sebelumnya</button>
-    <button onclick="nextEpisode()">Selanjutnya ➡</button>
+    <button onclick="prevEpisode()">Sebelumnya</button>
+    <button onclick="nextEpisode()">Selanjutnya</button>
   </div>
 
+     <!-- Banner Ads -->
+  <div class="banner">
+    <a href="**BANNER_ADS_LINK**" target="_blank">
+      <img src="**BANNER_IMAGE**" alt="Iklan" onerror="this.outerHTML='<p style=\'color:#aaa;\'>[ADS HERE]</p>'">
+    </a>
+  </div>
+  
   <!-- Episodes -->
   <h3>Episode</h3>
   <div id="episodes" class="episodes"></div>
-
+  
+   <!-- Banner Ads -->
+  <div class="banner">
+    <a href="**BANNER_ADS_LINK**" target="_blank">
+      <img src="**BANNER_IMAGE**" alt="Iklan" onerror="this.outerHTML='<p style=\'color:#aaa;\'>[ADS HERE]</p>'">
+    </a>
+  </div>
+  
     <!-- Poster & Sinopsis -->
   <img id="poster" class="poster" src="**POSTER_IMAGE**c" alt="Poster">
   <div id="synopsis" class="synopsis">**SINOPSIS**</div>
