@@ -5,7 +5,7 @@
   "servers": ["doodstream", "mixdrop", "streamtape"],
   "episodes": {
     "1": {
-      "doodstream": "**DOOD_EP1**",
+      "doodstream": "https://youtu.be/iHPiAjNqq4k?feature=shared",
       "mixdrop": "**MIXDROP_EP1**",
       "streamtape": "**STREAMTAPE_EP1**"
     },
