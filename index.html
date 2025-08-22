@@ -3,83 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{DRAMA_TITLE}}</title>
+  <title>Landing Page Streaming</title>
   <style>
-    body { font-family: Arial, sans-serif; background:#111; color:#fff; margin:0; padding:0; text-align:center; }
-    h1 { font-size: 24px; margin: 20px 0; }
-    .banner { margin: 15px 0; }
-    .player { background:#000; height:200px; display:flex; align-items:center; justify-content:center; margin:15px; border-radius:10px; }
-    .servers button, .episodes button { margin:5px; padding:10px 15px; border:none; border-radius:6px; background:#333; color:#fff; cursor:pointer; }
-    .servers button:hover, .episodes button:hover { background:#555; }
-    .episodes { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin:20px; }
-    .poster { margin:20px; }
-    .poster img { width:200px; border-radius:10px; }
-    .nav-ep { margin: 15px 0; }
-    .share { margin: 10px 0; }
-    .share button { margin: 5px; padding:8px 12px; border:none; border-radius:6px; background:#444; color:#fff; cursor:pointer; }
+    body { font-family: Arial, sans-serif; background: #fff; margin: 0; padding: 0; color: #111; }
+    .container { width: 95%; max-width: 900px; margin: auto; padding: 15px; }
+    .ads, .banner-ads { background: #f4f4f4; text-align: center; padding: 20px; margin: 10px 0; border-radius: 10px; }
+    .player { width: 100%; height: 400px; border: none; border-radius: 10px; margin-bottom: 15px; background: #000; }
+    .servers button, .episodes button { margin: 5px; padding: 10px 15px; border: none; border-radius: 8px; background: #222; color: #fff; cursor: pointer; }
+    .servers button.active { background: #007bff; }
+    .episodes { margin-top: 10px; }
+    .poster { width: 150px; border-radius: 10px; margin-right: 15px; float: left; }
+    .info { overflow: hidden; }
   </style>
 </head>
 <body>
+  <div class="container">
+    
+    <!-- Social Bar Ads -->
+    <div class="ads">SOCIAL BAR ADS</div>
 
-  <!-- JUDUL DRAMA -->
-  <h1><b>{{DRAMA_TITLE}}</b></h1>
+    <!-- Video Player -->
+    <iframe id="player" class="player" src=""></iframe>
 
-  <!-- BANNER ADS ATAS -->
-  <div class="banner">
-    <img src="{{BANNER_ADS_TOP}}" alt="Banner Ads Atas" width="300">
+    <!-- Server Pilihan -->
+    <div class="servers">
+      <button onclick="changeServer('doodstream')" class="active">Doodstream</button>
+      <button onclick="changeServer('mixdrop')">Mixdrop</button>
+      <button onclick="changeServer('streamtape')">Streamtape</button>
+    </div>
+
+    <!-- In Page Push Ads -->
+    <div class="ads">IN PAGE PUSH ADS</div>
+
+    <!-- Episode Pilihan -->
+    <h3>Episode</h3>
+    <div id="episodes" class="episodes"></div>
+
+    <!-- Banner Ads -->
+    <div class="banner-ads">BANNER ADS</div>
+
+    <!-- Poster & Sinopsis -->
+    <div class="info">
+      <img id="poster" class="poster" src="">
+      <p id="synopsis"></p>
+    </div>
   </div>
 
-  <!-- SHARE MEDSOS -->
-  <div class="share">
-    <button>WhatsApp</button>
-    <button>Telegram</button>
-    <button>Facebook</button>
-    <button>X/Twitter</button>
-  </div>
+  <script>
+    const dataUrl = "data.json"; // **GANTI DENGAN LINK JSON**
+    let currentServer = "doodstream";
 
-  <!-- PLAYER VIDEO -->
-  <div class="player">
-    <p>Player Video</p>
-  </div>
+    async function loadData() {
+      const response = await fetch(dataUrl);
+      const data = await response.json();
 
-  <!-- PREVIOUS NEXT -->
-  <div class="nav-ep">
-    <button>Previous</button>
-    <button>Next</button>
-  </div>
+      // Poster & sinopsis
+      document.getElementById("poster").src = data.poster;
+      document.getElementById("synopsis").innerText = data.synopsis;
 
-  <!-- PILIH SERVER -->
-  <h3>Pilih Server</h3>
-  <div class="servers">
-    <button>Doodstream</button>
-    <button>Mixdrop</button>
-    <button>Streamtape</button>
-  </div>
+      // Generate Episode
+      const episodesContainer = document.getElementById("episodes");
+      episodesContainer.innerHTML = "";
+      Object.keys(data.episodes).forEach(num => {
+        const btn = document.createElement("button");
+        btn.innerText = "Episode " + num;
+        btn.onclick = () => loadEpisode(num, btn);
+        episodesContainer.appendChild(btn);
+      });
 
-  <!-- BANNER ADS TENGAH -->
-  <div class="banner">
-    <img src="{{BANNER_ADS_MIDDLE}}" alt="Banner Ads Tengah" width="300">
-  </div>
+      // Auto-load Episode 1
+      loadEpisode("1");
+    }
 
-  <!-- PILIH EPISODE -->
-  <h3>Pilih Episode</h3>
-  <div class="episodes">
-    <!-- EPISODES BUTTONS -->
-    {% for ep in EPISODES %}
-    <button>Episode {{ep}}</button>
-    {% endfor %}
-  </div>
+    function loadEpisode(num, btn) {
+      fetch(dataUrl).then(res => res.json()).then(data => {
+        const episode = data.episodes[num];
+        document.getElementById("player").src = episode[currentServer];
 
-  <!-- POSTER & SINOPSIS -->
-  <div class="poster">
-    <img src="{{POSTER}}" alt="Poster Drama">
-    <p>{{SINOPSIS}}</p>
-  </div>
+        // Highlight episode aktif
+        document.querySelectorAll("#episodes button").forEach(b => b.classList.remove("active"));
+        if (btn) btn.classList.add("active");
+      });
+    }
 
-  <!-- BANNER ADS BAWAH -->
-  <div class="banner">
-    <img src="{{BANNER_ADS_BOTTOM}}" alt="Banner Ads Bawah" width="300">
-  </div>
+    function changeServer(server) {
+      currentServer = server;
+      const active = document.querySelector("#episodes button.active");
+      if (active) {
+        const num = active.innerText.replace("Episode ", "");
+        loadEpisode(num, active);
+      } else {
+        loadEpisode("1");
+      }
 
+      // Highlight server aktif
+      document.querySelectorAll(".servers button").forEach(b => b.classList.remove("active"));
+      event.target.classList.add("active");
+    }
+
+    window.onload = loadData;
+  </script>
 </body>
 </html>
