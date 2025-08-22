@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{DRAMA_TITLE}}</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#111; color:#fff; margin:0; padding:0; text-align:center; }
+    h1 { font-size: 24px; margin: 20px 0; }
+    .banner { margin: 15px 0; }
+    .player { background:#000; height:200px; display:flex; align-items:center; justify-content:center; margin:15px; border-radius:10px; }
+    .servers button, .episodes button { margin:5px; padding:10px 15px; border:none; border-radius:6px; background:#333; color:#fff; cursor:pointer; }
+    .servers button:hover, .episodes button:hover { background:#555; }
+    .episodes { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin:20px; }
+    .poster { margin:20px; }
+    .poster img { width:200px; border-radius:10px; }
+    .nav-ep { margin: 15px 0; }
+    .share { margin: 10px 0; }
+    .share button { margin: 5px; padding:8px 12px; border:none; border-radius:6px; background:#444; color:#fff; cursor:pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- JUDUL DRAMA -->
+  <h1><b>{{DRAMA_TITLE}}</b></h1>
+
+  <!-- BANNER ADS ATAS -->
+  <div class="banner">
+    <img src="{{BANNER_ADS_TOP}}" alt="Banner Ads Atas" width="300">
+  </div>
+
+  <!-- SHARE MEDSOS -->
+  <div class="share">
+    <button>WhatsApp</button>
+    <button>Telegram</button>
+    <button>Facebook</button>
+    <button>X/Twitter</button>
+  </div>
+
+  <!-- PLAYER VIDEO -->
+  <div class="player">
+    <p>Player Video</p>
+  </div>
+
+  <!-- PREVIOUS NEXT -->
+  <div class="nav-ep">
+    <button>Previous</button>
+    <button>Next</button>
+  </div>
+
+  <!-- PILIH SERVER -->
+  <h3>Pilih Server</h3>
+  <div class="servers">
+    <button>Doodstream</button>
+    <button>Mixdrop</button>
+    <button>Streamtape</button>
+  </div>
+
+  <!-- BANNER ADS TENGAH -->
+  <div class="banner">
+    <img src="{{BANNER_ADS_MIDDLE}}" alt="Banner Ads Tengah" width="300">
+  </div>
+
+  <!-- PILIH EPISODE -->
+  <h3>Pilih Episode</h3>
+  <div class="episodes">
+    <!-- EPISODES BUTTONS -->
+    {% for ep in EPISODES %}
+    <button>Episode {{ep}}</button>
+    {% endfor %}
+  </div>
+
+  <!-- POSTER & SINOPSIS -->
+  <div class="poster">
+    <img src="{{POSTER}}" alt="Poster Drama">
+    <p>{{SINOPSIS}}</p>
+  </div>
+
+  <!-- BANNER ADS BAWAH -->
+  <div class="banner">
+    <img src="{{BANNER_ADS_BOTTOM}}" alt="Banner Ads Bawah" width="300">
+  </div>
+
+</body>
+</html>

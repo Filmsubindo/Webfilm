@@ -1,0 +1,95 @@
+{
+  "DRAMA_TITLE": "Judul Drama Korea",
+  "BANNER_ADS_TOP": "URL_BANNER_ADS_ATAS",
+  "BANNER_ADS_MIDDLE": "URL_BANNER_ADS_TENGAH",
+  "BANNER_ADS_BOTTOM": "URL_BANNER_ADS_BAWAH",
+  "VIDEO_SERVERS": {
+    "Doodstream": "URL_VIDEO_DOODSTREAM",
+    "Mixdrop": "URL_VIDEO_MIXDROP",
+    "Streamtape": "URL_VIDEO_STREAMTAPE"
+  },
+  "EPISODES": [
+    {
+      "episode": 1,
+      "link": "URL_EPISODE_1"
+    },
+    {
+      "episode": 2,
+      "link": "URL_EPISODE_2"
+    },
+    {
+      "episode": 3,
+      "link": "URL_EPISODE_3"
+    },
+    {
+      "episode": 4,
+      "link": "URL_EPISODE_4"
+    },
+    {
+      "episode": 5,
+      "link": "URL_EPISODE_5"
+    },
+    {
+      "episode": 6,
+      "link": "URL_EPISODE_6"
+    },
+    {
+      "episode": 7,
+      "link": "URL_EPISODE_7"
+    },
+    {
+      "episode": 8,
+      "link": "URL_EPISODE_8"
+    },
+    {
+      "episode": 9,
+      "link": "URL_EPISODE_9"
+    },
+    {
+      "episode": 10,
+      "link": "URL_EPISODE_10"
+    },
+    {
+      "episode": 11,
+      "link": "URL_EPISODE_11"
+    },
+    {
+      "episode": 12,
+      "link": "URL_EPISODE_12"
+    },
+    {
+      "episode": 13,
+      "link": "URL_EPISODE_13"
+    },
+    {
+      "episode": 14,
+      "link": "URL_EPISODE_14"
+    },
+    {
+      "episode": 15,
+      "link": "URL_EPISODE_15"
+    },
+    {
+      "episode": 16,
+      "link": "URL_EPISODE_16"
+    },
+    {
+      "episode": 17,
+      "link": "URL_EPISODE_17"
+    },
+    {
+      "episode": 18,
+      "link": "URL_EPISODE_18"
+    },
+    {
+      "episode": 19,
+      "link": "URL_EPISODE_19"
+    },
+    {
+      "episode": 20,
+      "link": "URL_EPISODE_20"
+    }
+  ],
+  "POSTER": "URL_POSTER_IMAGE",
+  "SINOPSIS": "Tulis sinopsis drama di sini."
+}
