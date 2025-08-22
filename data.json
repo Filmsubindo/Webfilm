@@ -1,9 +1,11 @@
 {
   "title": "**JUDUL DRAMA**",
+  "poster": "**POSTER_IMAGE**",
+  "synopsis": "**SINOPSIS_DRAMA**",
   "servers": ["doodstream", "mixdrop", "streamtape"],
   "episodes": {
     "1": {
-      "doodstream": "https://d-s.io/e/2tg1u94wcsaf",
+      "doodstream": "**DOOD_EP1**",
       "mixdrop": "**MIXDROP_EP1**",
       "streamtape": "**STREAMTAPE_EP1**"
     },
@@ -35,6 +37,4 @@
     "19": { "doodstream": "**DOOD_EP19**", "mixdrop": "**MIXDROP_EP19**", "streamtape": "**STREAMTAPE_EP19**" },
     "20": { "doodstream": "**DOOD_EP20**", "mixdrop": "**MIXDROP_EP20**", "streamtape": "**STREAMTAPE_EP20**" }
   }
-  "poster": "**POSTER_IMAGE**",
-  "synopsis": "**SINOPSIS_DRAMA**",
 }
