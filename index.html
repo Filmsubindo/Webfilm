@@ -1,59 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Streaming Player</title>
+  <title>Komang</title>
   <style>
-    body { font-family: Arial, sans-serif; background:#111; color:#fff; margin:0; padding:0; }
-    .container { max-width:900px; margin:auto; padding:20px; }
-    h1 { font-size:24px; margin-bottom:10px; }
-    iframe { width:100%; height:500px; border:none; border-radius:8px; }
-    .buttons { margin:10px 0; display:flex; flex-wrap:wrap; gap:6px; }
-    .buttons button { padding:8px 12px; border:none; border-radius:6px; background:#333; color:#fff; cursor:pointer; }
-    .buttons button.active { background:#e50914; }
-    .nav-buttons { display:flex; justify-content:space-between; margin-top:15px; }
-    .nav-buttons button { flex:1; margin:0 5px; padding:10px; border:none; border-radius:6px; background:#444; color:#fff; cursor:pointer; }
+    body {
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    h1 { 
+      padding: 8px;
+      font-size: 20px;
+      margin: 0;
+    }
+    .banner {
+      background: #222;
+      margin: 10px auto;
+      padding: 10px;
+    }
+    /* Responsive Player */
+    .player-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: 10px auto;
+      padding-top: 56.25%; /* Rasio 16:9 */
+    }
+    .player-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 8px;
+    }
+    .server-label { font-weight: bold; margin: 15px 0 8px; }
+    .servers button, .episodes button, .nav-buttons button {
+      margin: 4px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      background: #333;
+      color: #fff;
+      cursor: pointer;
+    }
+    .servers button:hover, .episodes button:hover, .nav-buttons button:hover {
+      background: #555;
+    }
+    .episodes {
+      margin: 10px auto;
+      max-width: 800px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .episodes button {
+      width: 100%;
+      padding: 10px;
+    }
+    .episodes button.active { background: #e50914; font-weight: bold; }
+    .nav-buttons { margin: 15px 0; }
+
+    /* Responsive Ads */
+    .ad-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px auto;
+      max-width: 100%;
+    }
+    .ad-container iframe {
+      width: 100% !important;
+      height: auto !important;
+      max-width: 300px;
+      border: none;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1 id="title">Loading...</h1>
-    
-    <!-- Video Player -->
+
+  <h1 id="title">**JUDUL DRAMA**</h1>
+
+  <!-- Banner Ads -->
+  <div class="banner">
+    <a href="**url**" target="_blank">
+      <img src="**BANNER_IMAGE**" alt="Iklan" 
+           onerror="this.outerHTML='<p style=\'color:#aaa;\'>[ADS HERE]</p>'">
+    </a>
+  </div>
+
+  <!-- Script Iklan Adsterra Responsive -->
+  <div class="ad-container">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '9305b559af351cb4039ab7087d1c0cad',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/9305b559af351cb4039ab7087d1c0cad/invoke.js"></script>
+  </div>
+
+  <!-- Player -->
+  <div class="player-container">
     <iframe id="player" src="" allowfullscreen></iframe>
-    
-    <!-- Server Buttons -->
-    <div class="buttons" id="servers"></div>
-    
-    <!-- Episode Buttons -->
-    <div class="buttons" id="episodes"></div>
-    
-    <!-- Navigation -->
-    <div class="nav-buttons">
-      <button onclick="handleNavClick('prev')">⬅ Prev</button>
-      <button onclick="handleNavClick('next')">Next ➡</button>
-    </div>
+  </div>
+
+  <!-- Pilih Server -->
+  <h3 class="server-label">Pilih Server</h3>
+  <div class="servers" id="servers"></div>
+
+  <!-- Navigation Episode -->
+  <div class="nav-buttons">
+    <button onclick="prevEpisode()">Sebelumnya</button>
+    <button onclick="nextEpisode()">Selanjutnya</button>
+  </div>
+
+  <!-- Banner Ads -->
+  <div class="banner">
+    <a href="**BANNER_ADS_LINK**" target="_blank">
+      <img src="**BANNER_IMAGE**" alt="Iklan" 
+           onerror="this.outerHTML='<p style=\'color:#aaa;\'>[ADS HERE]</p>'">
+    </a>
+  </div>
+  
+  <!-- Episodes -->
+  <h3>Episode</h3>
+  <div id="episodes" class="episodes"></div>
+  
+  <!-- Banner Ads -->
+  <div class="banner">
+    <a href="**BANNER_ADS_LINK**" target="_blank">
+      <img src="**BANNER_IMAGE**" alt="Iklan" 
+           onerror="this.outerHTML='<p style=\'color:#aaa;\'>[ADS HERE]</p>'">
+    </a>
   </div>
 
   <script>
-    const dataUrl = "data.json"; // file JSON daftar episode
+    const dataUrl = "data.json";
     let currentServer = "doodstream";
     let currentEpisode = "1";
     let data;
-
-    // Smartlink Adsterra kamu
-    const smartlink = "//pl27480535.profitableratecpm.com/fd/ba/df/fdbadfee4d981f6be627d59602cf67ae.js";
-
-    // Status klik (reset tiap reload + reset 2 jam sekali)
-    let clickStatus = { episodes:{}, nav:{prev:false, next:false} };
-
-    // cek waktu terakhir
-    const lastTime = localStorage.getItem("lastClickTime");
-    if (!lastTime || (Date.now() - parseInt(lastTime)) > 2*60*60*1000) {
-      localStorage.setItem("lastClickTime", Date.now());
-      clickStatus = { episodes:{}, nav:{prev:false, next:false} };
-    }
 
     async function loadData() {
       const response = await fetch(dataUrl);
@@ -77,33 +171,12 @@
       Object.keys(data.episodes).forEach(num => {
         const btn = document.createElement("button");
         btn.innerText = "Episode " + num;
+        btn.onclick = () => loadEpisode(num);
         btn.id = "ep-" + num;
-        btn.onclick = () => handleEpisodeClick(num);
         episodesContainer.appendChild(btn);
       });
 
       loadEpisode("1");
-    }
-
-    function handleEpisodeClick(num) {
-      if (!clickStatus.episodes[num]) {
-        clickStatus.episodes[num] = true;
-        localStorage.setItem("lastClickTime", Date.now());
-        window.open(smartlink, "_blank");
-      } else {
-        loadEpisode(num);
-      }
-    }
-
-    function handleNavClick(type) {
-      if (!clickStatus.nav[type]) {
-        clickStatus.nav[type] = true;
-        localStorage.setItem("lastClickTime", Date.now());
-        window.open(smartlink, "_blank");
-      } else {
-        if (type === "next") nextEpisode();
-        if (type === "prev") prevEpisode();
-      }
     }
 
     function loadEpisode(num) {
@@ -111,6 +184,7 @@
       const episode = data.episodes[num];
       document.getElementById("player").src = episode[currentServer];
 
+      // highlight active
       document.querySelectorAll("#episodes button")
         .forEach(b => b.classList.remove("active"));
       document.getElementById("ep-" + num).classList.add("active");
@@ -133,5 +207,9 @@
 
     window.onload = loadData;
   </script>
+
+  <!-- Social Bar Ads -->
+  <script type='text/javascript' src='//pl27480535.profitableratecpm.com/fd/ba/df/fdbadfee4d981f6be627d59602cf67ae.js'></script>
+
 </body>
 </html>
