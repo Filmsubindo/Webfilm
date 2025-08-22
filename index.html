@@ -3,107 +3,145 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Streaming Drama</title>
+  <title>**JUDUL DRAMA**</title>
   <style>
-    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#111; color:#fff; text-align:center; }
-    .banner { margin:10px 0; }
-    .share button { margin:5px; }
-    iframe { width:100%; height:400px; border:none; border-radius:8px; }
-    .servers button, .episodes button {
-      margin:5px; padding:10px 15px; border:none; border-radius:6px; cursor:pointer; background:#333; color:#fff;
+    body {
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
     }
-    .episodes { display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; margin:20px 0; }
-    .poster { margin:20px auto; max-width:400px; }
-    .poster img { width:100%; border-radius:8px; }
+    h1 { padding: 15px; }
+    .banner {
+      background: #222;
+      margin: 10px auto;
+      padding: 10px;
+    }
+    iframe {
+      width: 100%;
+      height: 400px;
+      max-width: 900px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .server-label { font-weight: bold; margin: 15px 0 8px; }
+    .servers button, .episodes button, .nav-buttons button {
+      margin: 4px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      background: #333;
+      color: #fff;
+      cursor: pointer;
+    }
+    .servers button:hover, .episodes button:hover, .nav-buttons button:hover {
+      background: #555;
+    }
+    .episodes { margin: 10px auto; max-width: 600px; flex-wrap: wrap; display: flex; justify-content: center; }
+    .episodes button.active { background: #e50914; font-weight: bold; }
+    .nav-buttons { margin: 15px 0; }
+    .synopsis { max-width: 800px; margin: 15px auto; text-align: justify; padding: 10px; }
+    img.poster { max-width: 300px; border-radius: 8px; margin: 15px 0; }
   </style>
 </head>
 <body>
-  <h1 id="title"></h1>
-  
-  <div class="banner"><a id="ads-top" target="_blank"><img src="" alt="Ads Top"></a></div>
-  
-  <div class="share" id="share"></div>
-  
-  <div class="player"><iframe id="player" src="" allowfullscreen></iframe></div>
-  
-  <div>
-    <button id="prev">⏮ Prev</button>
-    <button id="next">Next ⏭</button>
+
+  <h1 id="title">**JUDUL DRAMA**</h1>
+
+  <!-- Banner Ads -->
+  <div class="banner">
+    <a href="**BANNER_ADS_LINK**" target="_blank">
+      <img src="**BANNER_IMAGE**" alt="Iklan" onerror="this.outerHTML='<p style=\'color:#aaa;\'>[ADS HERE]</p>'">
+    </a>
   </div>
-  
-  <h3>Pilih Server</h3>
+
+  <!-- Poster & Sinopsis -->
+  <img id="poster" class="poster" src="**POSTER_IMAGE**" alt="Poster">
+  <div id="synopsis" class="synopsis">**SINOPSIS**</div>
+
+  <!-- Player -->
+  <iframe id="player" src="" allowfullscreen></iframe>
+
+  <!-- Pilih Server -->
+  <h3 class="server-label">Pilih Server</h3>
   <div class="servers" id="servers"></div>
-  
-  <div class="banner"><a id="ads-middle" target="_blank"><img src="" alt="Ads Middle"></a></div>
-  
-  <h3>Pilih Episode</h3>
-  <div class="episodes" id="episodes"></div>
-  
-  <div class="poster">
-    <img id="poster" src="" alt="Poster">
-    <p id="sinopsis"></p>
+
+  <!-- Navigation Episode -->
+  <div class="nav-buttons">
+    <button onclick="prevEpisode()">⬅ Sebelumnya</button>
+    <button onclick="nextEpisode()">Selanjutnya ➡</button>
   </div>
-  
-  <div class="banner"><a id="ads-bottom" target="_blank"><img src="" alt="Ads Bottom"></a></div>
-  
-<script>
-let data, currentEpisode = 1;
 
-fetch("data.json")
-  .then(res => res.json())
-  .then(json => {
-    data = json;
-    document.getElementById("title").innerText = data.title;
-    document.getElementById("ads-top").href = data.ads_top;
-    document.getElementById("ads-top").querySelector("img").src = data.ads_top;
-    document.getElementById("ads-middle").href = data.ads_middle;
-    document.getElementById("ads-middle").querySelector("img").src = data.ads_middle;
-    document.getElementById("ads-bottom").href = data.ads_bottom;
-    document.getElementById("ads-bottom").querySelector("img").src = data.ads_bottom;
-    document.getElementById("poster").src = data.poster;
-    document.getElementById("sinopsis").innerText = data.sinopsis;
-    
-    // Share buttons
-    let shareHTML = "";
-    for (const [platform, link] of Object.entries(data.share)) {
-      shareHTML += `<button onclick="window.open('${link}','_blank')">${platform}</button>`;
+  <!-- Episodes -->
+  <h3>Episode</h3>
+  <div id="episodes" class="episodes"></div>
+
+  <script>
+    const dataUrl = "data.json"; // GANTI JIKA PERLU
+    let currentServer = "doodstream";
+    let currentEpisode = "1";
+    let data;
+
+    async function loadData() {
+      const response = await fetch(dataUrl);
+      data = await response.json();
+
+      document.getElementById("title").innerText = data.title;
+      document.getElementById("poster").src = data.poster;
+      document.getElementById("synopsis").innerText = data.synopsis;
+
+      // server buttons
+      const serverContainer = document.getElementById("servers");
+      serverContainer.innerHTML = "";
+      data.servers.forEach(srv => {
+        const btn = document.createElement("button");
+        btn.innerText = srv.charAt(0).toUpperCase() + srv.slice(1);
+        btn.onclick = () => changeServer(srv);
+        serverContainer.appendChild(btn);
+      });
+
+      // episode buttons
+      const episodesContainer = document.getElementById("episodes");
+      episodesContainer.innerHTML = "";
+      Object.keys(data.episodes).forEach(num => {
+        const btn = document.createElement("button");
+        btn.innerText = "Episode " + num;
+        btn.onclick = () => loadEpisode(num);
+        btn.id = "ep-" + num;
+        episodesContainer.appendChild(btn);
+      });
+
+      loadEpisode("1");
     }
-    document.getElementById("share").innerHTML = shareHTML;
-    
-    // Server buttons
-    let serverHTML = "";
-    for (const [name, link] of Object.entries(data.servers)) {
-      serverHTML += `<button onclick="changeServer('${link}')">${name}</button>`;
+
+    function loadEpisode(num) {
+      currentEpisode = num;
+      const episode = data.episodes[num];
+      document.getElementById("player").src = episode[currentServer];
+
+      // highlight active
+      document.querySelectorAll("#episodes button").forEach(b => b.classList.remove("active"));
+      document.getElementById("ep-" + num).classList.add("active");
     }
-    document.getElementById("servers").innerHTML = serverHTML;
-    
-    // Episodes
-    let epHTML = "";
-    data.episodes.forEach(ep => {
-      epHTML += `<button onclick="changeEpisode(${ep.id})">${ep.title}</button>`;
-    });
-    document.getElementById("episodes").innerHTML = epHTML;
-    
-    loadEpisode(currentEpisode);
-  });
 
-function loadEpisode(id) {
-  currentEpisode = id;
-  let ep = data.episodes.find(e => e.id === id);
-  document.getElementById("player").src = ep.url;
-}
+    function changeServer(server) {
+      currentServer = server;
+      loadEpisode(currentEpisode);
+    }
 
-function changeServer(link) {
-  document.getElementById("player").src = link;
-}
+    function nextEpisode() {
+      let next = parseInt(currentEpisode) + 1;
+      if (data.episodes[next]) loadEpisode(next.toString());
+    }
 
-document.getElementById("prev").onclick = () => {
-  if (currentEpisode > 1) loadEpisode(currentEpisode - 1);
-};
+    function prevEpisode() {
+      let prev = parseInt(currentEpisode) - 1;
+      if (data.episodes[prev]) loadEpisode(prev.toString());
+    }
 
-document.getElementById("next").onclick = () => {
-  if (currentEpisode < data.episodes.length) loadEpisode(currentEpisode + 1);
-};
-</script>
+    window.onload = loadData;
+  </script>
 </body>
 </html>
