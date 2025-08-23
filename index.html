@@ -63,7 +63,11 @@
       width: 100%;
       padding: 10px;
     }
-    .episodes button.active { background: #e50914; font-weight: bold; }
+    .episodes button.active, 
+    .servers button.active { 
+      background: #e50914; 
+      font-weight: bold; 
+    }
     .nav-buttons { margin: 15px 0; }
 
     /* Responsive Ads */
@@ -121,6 +125,7 @@
       data.servers.forEach(srv => {
         const btn = document.createElement("button");
         btn.innerText = srv.charAt(0).toUpperCase() + srv.slice(1);
+        btn.id = "srv-" + srv;
         btn.onclick = () => changeServer(srv);
         serverContainer.appendChild(btn);
       });
@@ -137,6 +142,7 @@
       });
 
       loadEpisode("1");
+      highlightServer(currentServer);
     }
 
     function loadEpisode(num) {
@@ -144,7 +150,7 @@
       const episode = data.episodes[num];
       document.getElementById("player").src = episode[currentServer];
 
-      // highlight active
+      // highlight active episode
       document.querySelectorAll("#episodes button")
         .forEach(b => b.classList.remove("active"));
       document.getElementById("ep-" + num).classList.add("active");
@@ -153,6 +159,13 @@
     function changeServer(server) {
       currentServer = server;
       loadEpisode(currentEpisode);
+      highlightServer(server);
+    }
+
+    function highlightServer(server) {
+      document.querySelectorAll("#servers button")
+        .forEach(b => b.classList.remove("active"));
+      document.getElementById("srv-" + server).classList.add("active");
     }
 
     function nextEpisode() {
