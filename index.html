@@ -63,8 +63,7 @@
       width: 100%;
       padding: 10px;
     }
-    .episodes button.active, 
-    .servers button.active { 
+    .episodes button.active, .servers button.active { 
       background: #e50914; 
       font-weight: bold; 
     }
@@ -125,8 +124,13 @@
       data.servers.forEach(srv => {
         const btn = document.createElement("button");
         btn.innerText = srv.charAt(0).toUpperCase() + srv.slice(1);
-        btn.id = "srv-" + srv;
-        btn.onclick = () => changeServer(srv);
+        btn.onclick = (e) => {
+          changeServer(srv);
+          document.querySelectorAll("#servers button")
+            .forEach(b => b.classList.remove("active"));
+          e.target.classList.add("active");
+        };
+        if (srv === currentServer) btn.classList.add("active");
         serverContainer.appendChild(btn);
       });
 
@@ -142,7 +146,6 @@
       });
 
       loadEpisode("1");
-      highlightServer(currentServer);
     }
 
     function loadEpisode(num) {
@@ -159,13 +162,6 @@
     function changeServer(server) {
       currentServer = server;
       loadEpisode(currentEpisode);
-      highlightServer(server);
-    }
-
-    function highlightServer(server) {
-      document.querySelectorAll("#servers button")
-        .forEach(b => b.classList.remove("active"));
-      document.getElementById("srv-" + server).classList.add("active");
     }
 
     function nextEpisode() {
