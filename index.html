@@ -86,12 +86,6 @@
 
   <h1 id="title">**JUDUL DRAMA**</h1>
 
-  <!-- Script Iklan Banner Adsterra 
-  <div class="ad-container">
-    <script async="async" data-cfasync="false" src="//pl27480935.profitableratecpm.com/1117995809b785a3f073ab0f8a27b690/invoke.js"></script>
-    <div id="container-1117995809b785a3f073ab0f8a27b690"></div>
-  </div> -->
-
   <!-- Player -->
   <div class="player-container">
     <iframe id="player" src="" allowfullscreen></iframe>
@@ -101,18 +95,13 @@
   <h3 class="server-label">Pilih Server</h3>
   <div class="servers" id="servers"></div>
 
-  
   <!-- Episodes -->
   <h3>Episode</h3>
-  <!-- Navigation Episode -->
   <div class="nav-buttons">
     <button onclick="prevEpisode()">Sebelumnya</button>
     <button onclick="nextEpisode()">Selanjutnya</button>
   </div>
-  
-
   <div id="episodes" class="episodes"></div>
- 
 
   <script>
     const dataUrl = "data.json";
@@ -177,6 +166,39 @@
     }
 
     window.onload = loadData;
+
+    /* ====== SMARTLINK IKLAN ====== */
+    const smartlink = "https://www.profitableratecpm.com/mqmhetb3m8?key=aa666ebd6608fe629f0d267996870966";
+    const adInterval = 60 * 60 * 1000; // 1 jam
+    const lastClickKey = "lastAdClick";
+
+    // buat overlay di atas player
+    const overlay = document.createElement("div");
+    overlay.style.position = "absolute";
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.cursor = "pointer";
+    overlay.style.zIndex = 10;
+    overlay.style.background = "rgba(0,0,0,0)"; // transparan
+
+    const playerContainer = document.querySelector(".player-container");
+    playerContainer.appendChild(overlay);
+
+    overlay.addEventListener("click", function() {
+      const now = Date.now();
+      const lastClick = localStorage.getItem(lastClickKey);
+
+      if (!lastClick || now - lastClick > adInterval) {
+        // buka smartlink
+        window.open(smartlink, "_blank");
+        localStorage.setItem(lastClickKey, now);
+      }
+
+      // hapus overlay biar video bisa diputar
+      overlay.remove();
+    });
   </script>
 
 </body>
