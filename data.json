@@ -2,17 +2,18 @@
   "title": "Film Sub Indo",
   "poster": "file_00000000449061f7b5f66186cae4fc7e.png",
   "synopsis": "Sebuah film yang ambil dari kisah nyata,........hsh",
-  "servers": ["Server 1", "Server 2", "Server 3"],
+  "servers": ["Server 1", "Server 2", "Server 3", "Server 4"],
   "episodes": {
     "1": {
-      "Server 1": "https://drive.google.com/file/d/17C-ymatwFSwQ65mYimQneyjkirbG0YVJ/preview",
+      "Server 1": "https://geo.dailymotion.com/player.html?video=x8ab2om",
       "Server 2": "https://d-s.io/e/joxduogbmtxr",
-      "Server 3": "https://geo.dailymotion.com/player.html?video=x8ab2om"
+      "Server 3": "https://mxdrop.to/e/q16qgoz8ulzvrm"
+      "Server 4": "https://mxdrop.to/e/q16qgoz8ulzvrm"
     },
     "2": {
       "Server 1": "https://d-s.io/e/tgx9eefscnqb",
       "Server 2": "**MIXDROP_EP2**",
-      "Server 3": "aHR0cHM6Ly9kLXMuaW8vZS90Z3g5ZWVmc2NucWI="
+      "Server 3": "https://mxdrop.to/e/q16qgoz8ulzvrm"
     },
     "3": {
       "doodstream": "aHR0cHM6Ly9kLXMuaW8vZS90Z3g5ZWVmc2NucWI=",
