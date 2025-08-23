@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Direktori Film A–Z</title>
+  <style>
+    :root{
+      --bg:#0f1115;--card:#161a22;--muted:#8b93a7;--text:#e7eaf3;--accent:#e50914;--ring:#2a3246
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Noto Sans",sans-serif}header{
+  position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(15,17,21,.95),rgba(15,17,21,.8));
+  backdrop-filter:saturate(140%) blur(8px);
+  border-bottom:1px solid #1f2533
+}
+.wrap{max-width:1100px;margin:0 auto;padding:14px 16px}
+h1{margin:0;font-size:clamp(18px,3vw,28px)}
+.sub{color:var(--muted);font-size:12px;margin-top:4px}
+
+.controls{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+@media (min-width:720px){.controls{grid-template-columns:1fr auto}}
+
+.search{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--ring);border-radius:12px;padding:10px 12px}
+.search input{flex:1;background:transparent;border:0;outline:none;color:var(--text);font-size:14px}
+
+.alpha{display:grid;grid-template-columns:repeat(13,1fr);gap:6px}
+@media (max-width:520px){.alpha{grid-template-columns:repeat(9,1fr)}}
+.alpha button{padding:6px 0;background:var(--card);border:1px solid var(--ring);border-radius:10px;color:var(--muted);cursor:pointer;font-weight:600}
+.alpha button.active{background:var(--accent);border-color:transparent;color:#fff}
+
+main{max-width:1100px;margin:12px auto;padding:0 16px}
+
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+@media (min-width:480px){.grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}}
+@media (min-width:900px){.grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}}
+
+.card{position:relative;overflow:hidden;border-radius:14px;background:var(--card);border:1px solid var(--ring);transition:transform .15s ease, box-shadow .15s ease}
+.card:hover{transform:translateY(-2px);box-shadow:0 4px 18px rgba(0,0,0,.25)}
+.thumb{aspect-ratio:2/3;width:100%;display:block;object-fit:cover;background:#0b0d12}
+.info{padding:10px}
+.title{font-size:14px;line-height:1.25;margin:0 0 2px 0}
+.title a{color:inherit;text-decoration:none}
+.meta{color:var(--muted);font-size:12px}
+
+.empty{color:var(--muted);text-align:center;padding:30px}
+
+.footer{color:var(--muted);font-size:12px;text-align:center;padding:20px}
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Direktori Film A–Z</h1>
+      <div class="sub">Daftar otomatis dari file JSON. Urut A–Z, responsif untuk HP, tablet, dan desktop.</div>
+      <div class="controls">
+        <label class="search" aria-label="Cari film">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11 4a7 7 0 015.292 11.708l3 3a1 1 0 01-1.414 1.414l-3-3A7 7 0 1111 4zm0 2a5 5 0 100 10 5 5 0 000-10z" fill="#8b93a7"/></svg>
+          <input id="q" type="search" placeholder="Cari judul…" autocomplete="off" />
+        </label>
+        <div class="alpha" id="alpha" aria-label="Filter huruf"></div>
+      </div>
+    </div>
+  </header>  <main>
+    <section class="grid" id="grid" aria-live="polite"></section>
+    <div class="empty" id="empty" hidden>Belum ada hasil. Coba huruf lain atau ubah kata kunci.</div>
+  </main>  <div class="footer">Data diambil dari <code>films.json</code>. Ubah/ tambah film cukup edit file JSON-nya—tanpa sentuh HTML.</div>  <script>
+    // ======= KONFIGURASI =======
+    const DATA_URL = 'films.json'; // ganti jika perlu
+
+    // ======= UTIL =======
+    const stopWords = /^(the|a|an)\s+/i;
+    const norm = s => (s||'').toString().trim();
+    const sortKey = title => norm(title).replace(stopWords,'').toLowerCase();
+    const firstLetter = title => {
+      const t = norm(title).replace(stopWords,'').toUpperCase();
+      const c = t.charAt(0);
+      return c && c.match(/[A-Z]/) ? c : '#'; // # untuk non huruf
+    };
+
+    // ======= STATE =======
+    let films = []; // asli dari JSON
+    let query = '';
+    let letter = 'ALL';
+
+    // ======= RENDER =======
+    const grid = document.getElementById('grid');
+    const empty = document.getElementById('empty');
+    const qInput = document.getElementById('q');
+    const alpha = document.getElementById('alpha');
+
+    function buildAlphaBar(){
+      const letters = ['ALL',...Array.from({length:26},(_,i)=>String.fromCharCode(65+i)),'#'];
+      alpha.innerHTML='';
+      letters.forEach(l=>{
+        const b = document.createElement('button');
+        b.textContent = l;
+        if(l===letter) b.classList.add('active');
+        b.addEventListener('click',()=>{letter=l;render();
+          [...alpha.children].forEach(x=>x.classList.remove('active')); b.classList.add('active');
+        });
+        alpha.appendChild(b);
+      });
+    }
+
+    function filterFilms(items){
+      const q = query.toLowerCase();
+      return items.filter(f=>{
+        const title = norm(f.title);
+        const matchQ = !q || title.toLowerCase().includes(q);
+        const fl = firstLetter(title);
+        const matchL = letter==='ALL' || letter===fl || (letter==='#' && !fl.match(/[A-Z]/));
+        return matchQ && matchL;
+      });
+    }
+
+    function render(){
+      const list = filterFilms(films).sort((a,b)=>sortKey(a.title).localeCompare(sortKey(b.title)));
+      grid.innerHTML='';
+      if(!list.length){ empty.hidden=false; return; }
+      empty.hidden=true;
+
+      const frag = document.createDocumentFragment();
+      list.forEach(f=>{
+        const card = document.createElement('article');
+        card.className='card';
+        const a = document.createElement('a');
+        a.href = f.url || '#';
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        const img = document.createElement('img');
+        img.className='thumb';
+        img.loading='lazy';
+        img.alt = `Poster ${norm(f.title)}`;
+        img.src = f.poster || '';
+        img.onerror = () => { img.src = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svgPlaceholder(norm(f.title))); };
+        const info = document.createElement('div'); info.className='info';
+        const h = document.createElement('h3'); h.className='title';
+        const t = document.createElement('a'); t.href=a.href; t.target=a.target; t.rel=a.rel; t.textContent = norm(f.title);
+        const meta = document.createElement('div'); meta.className='meta'; meta.textContent = (f.year?f.year+' • ':'') + (f.genre||'');
+        h.appendChild(t); info.appendChild(h); if(f.year||f.genre) info.appendChild(meta);
+        a.appendChild(img); card.appendChild(a); card.appendChild(info); frag.appendChild(card);
+      });
+      grid.appendChild(frag);
+    }
+
+    function svgPlaceholder(title){
+      const txt = (title||'Tanpa Judul').slice(0,24).replace(/&/g,'&amp;');
+      return `
+        <svg xmlns='http://www.w3.org/2000/svg' width='480' height='720'>
+          <defs>
+            <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+              <stop offset='0%' stop-color='#1b2333'/>
+              <stop offset='100%' stop-color='#101521'/>
+            </linearGradient>
+          </defs>
+          <rect width='100%' height='100%' fill='url(#g)'/>
+          <text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#8b93a7' font-family='Segoe UI, Roboto, sans-serif' font-size='32'>
+            ${txt}
+          </text>
+        </svg>`;
+    }
+
+    // ======= LOAD JSON =======
+    async function init(){
+      buildAlphaBar();
+      try{
+        const res = await fetch(DATA_URL, {cache:'no-store'});
+        if(!res.ok) throw new Error('Gagal memuat data');
+        const json = await res.json();
+        // Ekspektasi struktur: [{ title, poster, url, year?, genre? }, ...]
+        films = Array.isArray(json)? json : (json.films || []);
+      }catch(e){
+        console.error(e);
+        films = [];
+      }
+      render();
+    }
+
+    // ======= EVENTS =======
+    qInput.addEventListener('input', e=>{ query = e.target.value; render(); });
+
+    // Kickoff
+    init();
+  </script>  <!--
+  ====== CONTOH STRUKTUR FILE films.json ======
+  Simpan sebagai films.json di folder yang sama dengan HTML ini.
+
+  --></body>
+</html>
