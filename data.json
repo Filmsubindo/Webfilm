@@ -10,9 +10,9 @@
       "Server 3": "**STREAMTAPE_EP1**"
     },
     "2": {
-      "doodstream": "https://d-s.io/e/tgx9eefscnqb",
-      "mixdrop": "**MIXDROP_EP2**",
-      "streamtape": "aHR0cHM6Ly9kLXMuaW8vZS90Z3g5ZWVmc2NucWI="
+      "Server 1": "https://d-s.io/e/tgx9eefscnqb",
+      "Server 2": "**MIXDROP_EP2**",
+      "Server 3": "aHR0cHM6Ly9kLXMuaW8vZS90Z3g5ZWVmc2NucWI="
     },
     "3": {
       "doodstream": "aHR0cHM6Ly9kLXMuaW8vZS90Z3g5ZWVmc2NucWI=",
