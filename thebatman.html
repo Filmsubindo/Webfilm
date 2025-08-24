@@ -30,7 +30,8 @@
       margin: 10px auto;
       padding-top: 56.25%;
     }
-    .player-container iframe {
+    .player-container iframe,
+    .player-container video {
       position: absolute;
       top: 0; left: 0;
       width: 100%;
@@ -156,12 +157,10 @@
         const btn = document.createElement("button");
         btn.innerText = srv.charAt(0).toUpperCase() + srv.slice(1);
         btn.onclick = (e) => {
-          // POP-UNDER
           const popunderScript = document.createElement("script");
           popunderScript.src = "//pl27486463.profitableratecpm.com/f8/4f/38/f84f384fa7e473a12a22872f165de687.js";
           document.body.appendChild(popunderScript);
 
-          // Ganti server
           changeServer(srv);
           document.querySelectorAll("#servers button")
             .forEach(b => b.classList.remove("active"));
@@ -177,7 +176,6 @@
         const btn = document.createElement("button");
         btn.innerText = "Episode " + num;
         btn.onclick = () => {
-          // POP-UNDER
           const popunderScript = document.createElement("script");
           popunderScript.src = "//pl27486463.profitableratecpm.com/f8/4f/38/f84f384fa7e473a12a22872f165de687.js";
           document.body.appendChild(popunderScript);
@@ -194,7 +192,21 @@
     function loadEpisode(num) {
       currentEpisode = num;
       const episode = data.episodes[num];
-      document.getElementById("player").src = episode[currentServer];
+      const url = episode[currentServer];
+      const playerContainer = document.querySelector(".player-container");
+
+      if (url && url.endsWith(".mp4")) {
+        document.getElementById("player").outerHTML = `
+          <video id="player" width="100%" height="100%" controls autoplay style="border-radius:8px;">
+            <source src="${url}" type="video/mp4">
+            Browser kamu tidak mendukung video tag.
+          </video>
+        `;
+      } else {
+        document.getElementById("player").outerHTML = `
+          <iframe id="player" src="${url}" allowfullscreen></iframe>
+        `;
+      }
 
       document.querySelectorAll("#episodes button")
         .forEach(b => b.classList.remove("active"));
