@@ -1,14 +1,14 @@
   [
     {
       "title": "Good Bad Ugly",
-      "poster": "https://filmsubindo.github.io/goodbadugly/image.jpg",
-      "url": "https://filmsubindo.github.io/goodbadugly/index.html",
+      "poster": "https://github.com/Filmsubindo/goodbadugly/blob/main/image.jpeg",
+      "url": "https://github.com/Filmsubindo/goodbadugly/blob/main/index.html",
       "year": 2025,
       "genre": "Action"
     },
     {
       "title": "The Batman",
-      "poster": "https://image.tmdb.org/t/p/w500/..jpg",
+      "poster": "https://github.com/Filmsubindo/goodbadugly/blob/main/image.jpeg",
       "url": "thebatman.html",
       "year": 2022,
       "genre": "Action"
